@@ -79,5 +79,6 @@ crashlytics-build.properties
 .vs
 .vscode
 
-Packages/
 Library/
+Logs/
+UserSettings/
