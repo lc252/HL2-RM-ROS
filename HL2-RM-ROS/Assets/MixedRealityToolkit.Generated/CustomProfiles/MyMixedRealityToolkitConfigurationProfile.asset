@@ -16,12 +16,12 @@ MonoBehaviour:
   experienceSettingsProfile: {fileID: 11400000, guid: 1ccbb3b1d759d6a49b4161a958329d9d, type: 2}
   targetExperienceScale: 3
   enableCameraSystem: 1
-  cameraProfile: {fileID: 11400000, guid: b1a601a8278775144b719848a05b2cbb, type: 2}
+  cameraProfile: {fileID: 11400000, guid: 3539d8fa85596464ba5dc449ec28918f, type: 2}
   cameraSystemType:
     reference: Microsoft.MixedReality.Toolkit.CameraSystem.MixedRealityCameraSystem,
       Microsoft.MixedReality.Toolkit.Services.CameraSystem
   enableInputSystem: 1
-  inputSystemProfile: {fileID: 11400000, guid: d80f3fc5de852464ab9c0fdd18820ed5, type: 2}
+  inputSystemProfile: {fileID: 11400000, guid: df9beba931761df41a099cdbb27083dc, type: 2}
   inputSystemType:
     reference: Microsoft.MixedReality.Toolkit.Input.MixedRealityInputSystem, Microsoft.MixedReality.Toolkit.Services.InputSystem
   enableBoundarySystem: 1
@@ -39,8 +39,8 @@ MonoBehaviour:
   spatialAwarenessSystemType:
     reference: Microsoft.MixedReality.Toolkit.SpatialAwareness.MixedRealitySpatialAwarenessSystem,
       Microsoft.MixedReality.Toolkit.Services.SpatialAwarenessSystem
-  spatialAwarenessSystemProfile: {fileID: 11400000, guid: 079d957f34337aa45bd8339abf515e7e, type: 2}
-  diagnosticsSystemProfile: {fileID: 11400000, guid: b4316b26ab292524ba2ffdbdd0671420, type: 2}
+  spatialAwarenessSystemProfile: {fileID: 11400000, guid: df8046dcbfb9f1f49b7e12f02e02c764, type: 2}
+  diagnosticsSystemProfile: {fileID: 0}
   enableDiagnosticsSystem: 1
   diagnosticsSystemType:
     reference: Microsoft.MixedReality.Toolkit.Diagnostics.MixedRealityDiagnosticsSystem,

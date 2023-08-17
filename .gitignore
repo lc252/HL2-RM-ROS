@@ -34,7 +34,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+# *.sln
 *.suo
 *.tmp
 *.user
@@ -86,3 +86,7 @@ Temp/
 ARM64/
 packages/
 Generated Files/
+Builds/
+obj/
+
+HL2-RM-ROS.sln
