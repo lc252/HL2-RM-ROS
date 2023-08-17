@@ -86,3 +86,5 @@ Temp/
 ARM64/
 packages/
 Generated Files/
+Builds/
+obj/
