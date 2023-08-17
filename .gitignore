@@ -83,3 +83,6 @@ Library/
 Logs/
 UserSettings/
 Temp/
+ARM64/
+packages/
+Generated Files/
