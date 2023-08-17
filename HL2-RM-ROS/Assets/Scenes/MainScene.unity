@@ -1490,6 +1490,7 @@ GameObject:
   - component: {fileID: 1899577549}
   - component: {fileID: 1899577548}
   - component: {fileID: 1899577547}
+  - component: {fileID: 1899577550}
   m_Layer: 0
   m_Name: ResearchMode
   m_TagString: Untagged
@@ -1554,11 +1555,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399c991722333f3409398f95e8b312b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AccelText: {fileID: 1991134699}
+  AccelText: {fileID: 1746526908}
   GyroText: {fileID: 1746526908}
   MagText: {fileID: 460741602}
   imuTopic: imu/data_raw
   magTopic: imu/mag
+--- !u!114 &1899577550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899577544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a38885e67f03634dbd68da4a7483244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1991134699}
 --- !u!1 &1991134697
 GameObject:
   m_ObjectHideFlags: 0
