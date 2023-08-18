@@ -100,7 +100,7 @@ public class ARUWPController : MonoBehaviour {
     /// Assets/StreamingAssets/ folder. It is useful when useCameraParamFile == true. [public use] 
     /// [initialization only]
     /// </summary>
-    public string cameraParam = "HL1/896x504.dat";
+    public string cameraParam = "HL2/1504x846.dat";
 
     /// <summary>
     /// The byte buffer to hold camera calibration content. It is useful when useCameraParamFile == 
@@ -173,7 +173,7 @@ public class ARUWPController : MonoBehaviour {
         AR_MATRIX_CODE_DETECTION = ARUWP.AR_MATRIX_CODE_DETECTION,
         // Since v0.3, feature grayscale is forced
         //AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX = ARUWP.AR_TEMPLATE_MATCHING_COLOR_AND_MATRIX,
-        AR_TEMPLATE_MATCHING_MONO_AND_MATRIX = ARUWP.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX
+        AR_TEMPLATE_MATCHING_MONO_AND_MATRIX = ARUWP.AR_TEMPLATE_MATCHING_MONO_AND_MATRIX,
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public class ARUWPController : MonoBehaviour {
         AR_MATRIX_CODE_3x3_HAMMING63 = ARUWP.AR_MATRIX_CODE_3x3_HAMMING63,
         AR_MATRIX_CODE_4x4 = ARUWP.AR_MATRIX_CODE_4x4,
         AR_MATRIX_CODE_4x4_BCH_13_9_3 = ARUWP.AR_MATRIX_CODE_4x4_BCH_13_9_3,
-        AR_MATRIX_CODE_4x4_BCH_13_5_5 = ARUWP.AR_MATRIX_CODE_4x4_BCH_13_5_5
+        AR_MATRIX_CODE_4x4_BCH_13_5_5 = ARUWP.AR_MATRIX_CODE_4x4_BCH_13_5_5,
     }
 
     /// <summary>

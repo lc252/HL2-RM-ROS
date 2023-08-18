@@ -378,6 +378,8 @@ public class ARUWPVideo : MonoBehaviour {
 			}
 			// Since v0.3, feature grayscale is forced       
 			frameData = new byte[controller.frameWidth * controller.frameHeight];
+			// my version, allocate space for rgb8
+			// frameData = new byte[controller.frameWidth * controller.frameHeight * 3];
 			Debug.Log(TAG + ": FrameReader is successfully initialized, " + controller.frameWidth + "x" + controller.frameHeight +
 				", Framerate: " + targetResFormat.FrameRate.Numerator + "/" + targetResFormat.FrameRate.Denominator);
 		}
@@ -694,18 +696,41 @@ public class ARUWPVideo : MonoBehaviour {
 				}
 				latestLocatableCameraToWorld = ConvertFloatArrayToMatrix4x4(cameraToWorldMatrixAsFloat);
 
-				var originalSoftwareBitmap = frame.VideoMediaFrame.SoftwareBitmap;
-				using (var input = originalSoftwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
+				// code from v0.3
+				// var originalSoftwareBitmap = frame.VideoMediaFrame.SoftwareBitmap;
+				// using (var input = originalSoftwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
+				// using (var inputReference = input.CreateReference()) {
+				// 	byte* inputBytes;
+				// 	uint inputCapacity;
+				// 	((IMemoryBufferByteAccess)inputReference).GetBuffer(out inputBytes, out inputCapacity);
+				// 	Marshal.Copy((IntPtr)inputBytes, frameData, 0, frameData.Length);
+				// }
+				// // Process the frame in this thread (still different from Unity thread)
+				// controller.ProcessFrameSync(frameData, latestLocatableCameraToWorld);
+				// originalSoftwareBitmap?.Dispose();
+				// signalTrackingUpdated = true;
+
+				// code from v0.2
+                // if (videoPreview) {
+                //     Interlocked.Exchange(ref _bitmap, softwareBitmap);
+                //     controller.ProcessFrameSync(SoftwareBitmap.Copy(softwareBitmap), );
+                // }
+                // else {
+					// controller.ProcessFrameASync(softwareBitmap);
+				// }
+				
+				// v0.3 into v0.2
+				var softwareBitmap = SoftwareBitmap.Convert(frame.VideoMediaFrame.SoftwareBitmap, BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore);
+				using (var input = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
 				using (var inputReference = input.CreateReference()) {
 					byte* inputBytes;
 					uint inputCapacity;
 					((IMemoryBufferByteAccess)inputReference).GetBuffer(out inputBytes, out inputCapacity);
 					Marshal.Copy((IntPtr)inputBytes, frameData, 0, frameData.Length);
 				}
-				// Process the frame in this thread (still different from Unity thread)
-				controller.ProcessFrameSync(frameData, latestLocatableCameraToWorld);
-				originalSoftwareBitmap?.Dispose();
-				signalTrackingUpdated = true;
+            	controller.ProcessFrameSync(frameData, latestLocatableCameraToWorld);
+				softwareBitmap?.Dispose();
+                signalTrackingUpdated = true;
 			}
 		}
 	}
