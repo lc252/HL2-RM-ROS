@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.WebCam;
+using System.Linq;
 
-using Unity.Robotics.ROSTCPConnector;
-using RosMessageTypes.Sensor;
-using RosMessageTypes.Std;
-using RosMessageTypes.BuiltinInterfaces;
+//using Unity.Robotics.ROSTCPConnector;
+//using RosMessageTypes.Sensor;
+//using RosMessageTypes.Std;
+//using RosMessageTypes.BuiltinInterfaces;
 
 
 
@@ -17,28 +18,24 @@ public class PVCameraStream : MonoBehaviour
 
     public Text text;
 
+    private bool photoProcessed = true;
+
     // Start is called before the first frame update
     void Start()
     {
         PhotoCapture.CreateAsync(false, OnPhotoCaptureCreated);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory);
-    }
-
     void OnPhotoCaptureCreated(PhotoCapture captureObject)
     {
         photoCaptureObject = captureObject;
 
-        // Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
+        Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
 
         CameraParameters c = new CameraParameters();
         c.hologramOpacity = 0.0f;
-        c.cameraResolutionWidth = 640;
-        c.cameraResolutionHeight = 360;
+        c.cameraResolutionWidth = cameraResolution.width;
+        c.cameraResolutionHeight = cameraResolution.height;
         c.pixelFormat = CapturePixelFormat.BGRA32;
 
         captureObject.StartPhotoModeAsync(c, OnPhotoModeStarted);
@@ -98,6 +95,8 @@ public class PVCameraStream : MonoBehaviour
             }
             // Now we could do something with the array such as texture.SetPixels() or run image processing on the list
         }
-        // photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
+        photoProcessed = true;
+        // take next photo (Async?)
+        photoCaptureObject.TakePhotoAsync(OnCapturedPhotoToMemory);
     }
 }
