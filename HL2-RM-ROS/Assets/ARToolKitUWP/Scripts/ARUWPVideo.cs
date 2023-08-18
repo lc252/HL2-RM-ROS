@@ -418,23 +418,23 @@ public class ARUWPVideo : MonoBehaviour {
 		}
 	}
 
-	internal SpatialCoordinateSystem worldOrigin { get; private set; }
-	public IntPtr WorldOriginPtr
-	{
-		set
-		{
-			//worldOrigin = Marshal.PtrToStructure<SpatialCoordinateSystem>(value);
+	// internal SpatialCoordinateSystem worldOrigin { get; private set; }
+	//public IntPtr WorldOriginPtr
+	//{
+	//	set
+	//	{
+	//		//worldOrigin = Marshal.PtrToStructure<SpatialCoordinateSystem>(value);
 
-			if (value == null)
-			{
-				throw new ArgumentException("World origin pointer is null");
-			}
+	//		if (value == null)
+	//		{
+	//			throw new ArgumentException("World origin pointer is null");
+	//		}
 
-			var obj = Marshal.GetObjectForIUnknown(value);
-			var scs = obj as SpatialCoordinateSystem;
-			worldOrigin = scs ?? throw new InvalidCastException("Failed to set SpatialCoordinateSystem from IntPtr");
-		}
-	}
+	//		var obj = Marshal.GetObjectForIUnknown(value);
+	//		var scs = obj as SpatialCoordinateSystem;
+	//		worldOrigin = scs ?? throw new InvalidCastException("Failed to set SpatialCoordinateSystem from IntPtr");
+	//	}
+	//}
 
 	/// <summary>
 	/// The task to asynchronously stops the video pipeline and frame reading. The task should
@@ -536,57 +536,57 @@ public class ARUWPVideo : MonoBehaviour {
 	/// See https://forum.unity3d.com/threads/locatable-camera-in-unity.398803/ for details.</param>
 	public bool HL1TryGetCameraToWorldMatrix(MediaFrameReference frameReference, out float[] outMatrix)
 	{
-		if (frameReference.Properties.ContainsKey(viewTransformGuid) == false)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//if (frameReference.Properties.ContainsKey(viewTransformGuid) == false)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		if (worldOrigin == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		// if (worldOrigin == null)
+		// {
+		outMatrix = GetIdentityMatrixFloatArray();
+		return true;//false;
+		// }
 
-		System.Numerics.Matrix4x4 cameraViewTransform = ConvertByteArrayToMatrix4x4(frameReference.Properties[viewTransformGuid] as byte[]);
-		if (cameraViewTransform == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//System.Numerics.Matrix4x4 cameraViewTransform = ConvertByteArrayToMatrix4x4(frameReference.Properties[viewTransformGuid] as byte[]);
+		//if (cameraViewTransform == null)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		SpatialCoordinateSystem cameraCoordinateSystem = frameReference.Properties[cameraCoordinateSystemGuid] as SpatialCoordinateSystem;
-		if (cameraCoordinateSystem == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//SpatialCoordinateSystem cameraCoordinateSystem = frameReference.Properties[cameraCoordinateSystemGuid] as SpatialCoordinateSystem;
+		//if (cameraCoordinateSystem == null)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		System.Numerics.Matrix4x4? cameraCoordsToUnityCoordsMatrix = cameraCoordinateSystem.TryGetTransformTo(worldOrigin);
-		if (cameraCoordsToUnityCoordsMatrix == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//// System.Numerics.Matrix4x4? cameraCoordsToUnityCoordsMatrix = cameraCoordinateSystem.TryGetTransformTo(worldOrigin);
+		//if (cameraCoordsToUnityCoordsMatrix == null)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		// Transpose the matrices to obtain a proper transform matrix
-		cameraViewTransform = System.Numerics.Matrix4x4.Transpose(cameraViewTransform);
+		//// Transpose the matrices to obtain a proper transform matrix
+		//cameraViewTransform = System.Numerics.Matrix4x4.Transpose(cameraViewTransform);
 
-		System.Numerics.Matrix4x4 cameraCoordsToUnityCoords = System.Numerics.Matrix4x4.Transpose(cameraCoordsToUnityCoordsMatrix.Value);
+		//System.Numerics.Matrix4x4 cameraCoordsToUnityCoords = System.Numerics.Matrix4x4.Transpose(cameraCoordsToUnityCoordsMatrix.Value);
 
-		System.Numerics.Matrix4x4 viewToWorldInCameraCoordsMatrix;
-		System.Numerics.Matrix4x4.Invert(cameraViewTransform, out viewToWorldInCameraCoordsMatrix);
-		System.Numerics.Matrix4x4 viewToWorldInUnityCoordsMatrix = System.Numerics.Matrix4x4.Multiply(cameraCoordsToUnityCoords, viewToWorldInCameraCoordsMatrix);
+		//System.Numerics.Matrix4x4 viewToWorldInCameraCoordsMatrix;
+		//System.Numerics.Matrix4x4.Invert(cameraViewTransform, out viewToWorldInCameraCoordsMatrix);
+		//System.Numerics.Matrix4x4 viewToWorldInUnityCoordsMatrix = System.Numerics.Matrix4x4.Multiply(cameraCoordsToUnityCoords, viewToWorldInCameraCoordsMatrix);
 
-		// Change from right handed coordinate system to left handed UnityEngine
-		viewToWorldInUnityCoordsMatrix.M31 *= -1f;
-		viewToWorldInUnityCoordsMatrix.M32 *= -1f;
-		viewToWorldInUnityCoordsMatrix.M33 *= -1f;
-		viewToWorldInUnityCoordsMatrix.M34 *= -1f;
+		//// Change from right handed coordinate system to left handed UnityEngine
+		//viewToWorldInUnityCoordsMatrix.M31 *= -1f;
+		//viewToWorldInUnityCoordsMatrix.M32 *= -1f;
+		//viewToWorldInUnityCoordsMatrix.M33 *= -1f;
+		//viewToWorldInUnityCoordsMatrix.M34 *= -1f;
 
-		outMatrix = ConvertMatrixToFloatArray(viewToWorldInUnityCoordsMatrix);
+		//outMatrix = ConvertMatrixToFloatArray(viewToWorldInUnityCoordsMatrix);
 
-		return true;
+		//return true;
 	}
 
 	
@@ -603,37 +603,37 @@ public class ARUWPVideo : MonoBehaviour {
 	public bool HL2TryGetCameraToWorldMatrix(MediaFrameReference frameReference, out float[] outMatrix)
 	{
 
-		if (worldOrigin == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		// if (worldOrigin == null)
+		// {
+		outMatrix = GetIdentityMatrixFloatArray();
+		return true; // false;
+		// }
 
-		SpatialCoordinateSystem cameraCoordinateSystem = frameReference.CoordinateSystem;
-		if (cameraCoordinateSystem == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//SpatialCoordinateSystem cameraCoordinateSystem = frameReference.CoordinateSystem;
+		//if (cameraCoordinateSystem == null)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		System.Numerics.Matrix4x4? cameraCoordsToUnityCoordsMatrix = cameraCoordinateSystem.TryGetTransformTo(worldOrigin);
-		if (cameraCoordsToUnityCoordsMatrix == null)
-		{
-			outMatrix = GetIdentityMatrixFloatArray();
-			return false;
-		}
+		//System.Numerics.Matrix4x4? cameraCoordsToUnityCoordsMatrix = cameraCoordinateSystem.TryGetTransformTo(worldOrigin);
+		//if (cameraCoordsToUnityCoordsMatrix == null)
+		//{
+		//	outMatrix = GetIdentityMatrixFloatArray();
+		//	return false;
+		//}
 
-		System.Numerics.Matrix4x4 cameraCoordsToUnityCoords = System.Numerics.Matrix4x4.Transpose(cameraCoordsToUnityCoordsMatrix.Value);
+		//System.Numerics.Matrix4x4 cameraCoordsToUnityCoords = System.Numerics.Matrix4x4.Transpose(cameraCoordsToUnityCoordsMatrix.Value);
 
-		// Change from right handed coordinate system to left handed UnityEngine
-		cameraCoordsToUnityCoords.M31 *= -1f;
-		cameraCoordsToUnityCoords.M32 *= -1f;
-		cameraCoordsToUnityCoords.M33 *= -1f;
-		cameraCoordsToUnityCoords.M34 *= -1f;
+		//// Change from right handed coordinate system to left handed UnityEngine
+		//cameraCoordsToUnityCoords.M31 *= -1f;
+		//cameraCoordsToUnityCoords.M32 *= -1f;
+		//cameraCoordsToUnityCoords.M33 *= -1f;
+		//cameraCoordsToUnityCoords.M34 *= -1f;
 
-		outMatrix = ConvertMatrixToFloatArray(cameraCoordsToUnityCoords);
+		//outMatrix = ConvertMatrixToFloatArray(cameraCoordsToUnityCoords);
 
-		return true;
+		//return true;
 	}
 
 	/// <summary>
@@ -720,7 +720,7 @@ public class ARUWPVideo : MonoBehaviour {
 	private void Start() {
 
 		// Fetch a pointer to Unity's spatial coordinate system
-		WorldOriginPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
+		// WorldOriginPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
 		
 		controller = GetComponent<ARUWPController>();
 		if (controller == null) {
