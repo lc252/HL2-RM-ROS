@@ -107,7 +107,7 @@ public class ResearchModeABImageStream : MonoBehaviour
         uint timeNanoSec = (uint)((Time.timeAsDouble - timeSec)*1e9);
         // construct image message
         var img_msg = new ImageMsg(
-            header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "HL2_color_optical_frame"),
+            header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map"),
             height: 512,
             width: 512,
             encoding: "mono8",

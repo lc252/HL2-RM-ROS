@@ -103,7 +103,7 @@ public class ResearchModeImuStream : MonoBehaviour
 
             // construct ROS messages
             double[] cov = { 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01 };
-            HeaderMsg header = new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "HL2_imu_frame");
+            HeaderMsg header = new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map");
             QuaternionMsg nullQ = new QuaternionMsg(-1, 0, 0, 0);
 
             ImuMsg imu = new ImuMsg(

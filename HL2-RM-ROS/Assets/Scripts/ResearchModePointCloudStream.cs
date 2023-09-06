@@ -95,7 +95,7 @@ public class ResearchModePointCloudStream : MonoBehaviour
             pointFields[2] = new PointFieldMsg("z", 8, PointFieldMsg.FLOAT32, 1);
             // construct pointcloud message
             var pc2_msg = new PointCloud2Msg(
-                header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "HL2_depth_optical_frame"),
+                header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map"),
                 height: 1,
                 width: (uint)(pointCloud.Length / 3),
                 fields: pointFields,
