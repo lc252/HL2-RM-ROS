@@ -291,17 +291,17 @@ namespace winrt::HL2UnityPlugin::implementation
                 std::vector<float> pointCloud;
 
                 // get tracking transform
-                // Windows::Perception::Spatial::SpatialLocation transToWorld = nullptr;
-                // if (pHL2ResearchMode->m_reconstructShortThrowPointCloud) 
-                // {
-                //     auto ts = PerceptionTimestampHelper::FromSystemRelativeTargetTime(HundredsOfNanoseconds(checkAndConvertUnsigned(timestamp.HostTicks)));
-                //     transToWorld = pHL2ResearchMode->m_locator.TryLocateAtTimestamp(ts, pHL2ResearchMode->m_refFrame);
-                //     if (transToWorld == nullptr) continue;
-                // }
+                Windows::Perception::Spatial::SpatialLocation transToWorld = nullptr;
+                if (pHL2ResearchMode->m_reconstructShortThrowPointCloud) 
+                {
+                    auto ts = PerceptionTimestampHelper::FromSystemRelativeTargetTime(HundredsOfNanoseconds(checkAndConvertUnsigned(timestamp.HostTicks)));
+                    transToWorld = pHL2ResearchMode->m_locator.TryLocateAtTimestamp(ts, pHL2ResearchMode->m_refFrame);
+                    if (transToWorld == nullptr) continue;
+                }
 
-                // XMMATRIX depthToWorld = XMMatrixIdentity();
-                // if (pHL2ResearchMode->m_reconstructShortThrowPointCloud)
-                //     depthToWorld = pHL2ResearchMode->m_depthCameraPoseInvMatrix * SpatialLocationToDxMatrix(transToWorld);
+                XMMATRIX depthToWorld = XMMatrixIdentity();
+                if (pHL2ResearchMode->m_reconstructShortThrowPointCloud)
+                    depthToWorld = pHL2ResearchMode->m_depthCameraPoseInvMatrix * SpatialLocationToDxMatrix(transToWorld);
 
                 pHL2ResearchMode->mu.lock();
                 auto roiCenterFloat = XMFLOAT3(pHL2ResearchMode->m_roiCenter[0], pHL2ResearchMode->m_roiCenter[1], pHL2ResearchMode->m_roiCenter[2]);
@@ -333,7 +333,7 @@ namespace winrt::HL2UnityPlugin::implementation
                                 auto tempPoint = (float)depth / 1000 * XMVector3Normalize(XMLoadFloat3(&pointOnUnitPlane));
                                 
                                 // apply transformation
-                                // auto pointInWorld = XMVector3Transform(tempPoint, XMMatrixIdentity());//depthToWorld); 
+                                auto pointInWorld = XMVector3Transform(tempPoint, depthToWorld); 
                                 // DO NOT TRANSFORM TO WORLD FRAME. MULTIPLY BY IDENTITY (DO NOTHING) INSTEAD. COULD REMOVE LINE ABOVE.
 
                                 // filter point cloud based on region of interest
