@@ -340,9 +340,9 @@ namespace winrt::HL2UnityPlugin::implementation
                                 if (!pHL2ResearchMode->m_useRoiFilter ||
                                     (pHL2ResearchMode->m_useRoiFilter && XMVector3InBounds(tempPoint - roiCenter, roiBound)))
                                 {
-                                    pointCloud.push_back(XMVectorGetX(tempPoint));
-                                    pointCloud.push_back(XMVectorGetY(tempPoint));
-                                    pointCloud.push_back(-XMVectorGetZ(tempPoint));
+                                    pointCloud.push_back(-XMVectorGetX(pointInWorld));
+                                    pointCloud.push_back(XMVectorGetY(pointInWorld));
+                                    pointCloud.push_back(-XMVectorGetZ(pointInWorld));
                                 }
                             }
                             // else if (i > pHL2ResearchMode->depthCamRoi.kRowLower * resolution.Height && i < pHL2ResearchMode->depthCamRoi.kRowUpper * resolution.Height &&
