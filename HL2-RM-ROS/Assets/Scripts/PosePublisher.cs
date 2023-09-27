@@ -18,7 +18,7 @@ public class PosePublisher : MonoBehaviour
 
     private double lastPublish = 0;
 
-    DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
 
     public Text text = null;
 

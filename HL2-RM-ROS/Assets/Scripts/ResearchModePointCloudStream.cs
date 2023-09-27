@@ -32,8 +32,7 @@ public class ResearchModePointCloudStream : MonoBehaviour
     public string pointcloud2Topic;
     // public string imgTopic;
 
-
-
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
 
     void Start()
     {
@@ -91,7 +90,7 @@ public class ResearchModePointCloudStream : MonoBehaviour
             pointFields[1] = new PointFieldMsg("y", 4, PointFieldMsg.FLOAT32, 1);
             pointFields[2] = new PointFieldMsg("z", 8, PointFieldMsg.FLOAT32, 1);
 
-            double[] cov = { 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01 };
+            var publishTime = (DateTime.Now - k_unixEpoch).TotalSeconds;
             var sec = (uint)publishTime;
             var nanosec = (uint)((publishTime - Math.Floor(publishTime)) * 1e9);
             HeaderMsg header = new HeaderMsg(0, new TimeMsg(sec, nanosec), "unity");

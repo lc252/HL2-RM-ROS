@@ -38,6 +38,9 @@ public class ResearchModeImuStream : MonoBehaviour
     public string imuTopic;
     public string magTopic;
 
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
+
+
     // public ImuVisualize RefImuVisualize = null;
 
     void Start()
