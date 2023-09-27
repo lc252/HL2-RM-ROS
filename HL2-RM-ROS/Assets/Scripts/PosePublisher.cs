@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System;
 
 using Unity.Robotics.ROSTCPConnector;
-using Unity.Robotics.Core;
 using RosMessageTypes.Geometry;
 using RosMessageTypes.BuiltinInterfaces;
 using RosMessageTypes.Std;
