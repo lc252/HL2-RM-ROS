@@ -10,6 +10,8 @@ using RosMessageTypes.Geometry;
 using RosMessageTypes.Std;
 using RosMessageTypes.BuiltinInterfaces;
 
+
+
 #if ENABLE_WINMD_SUPPORT
 using HL2UnityPlugin;
 #endif
@@ -97,14 +99,15 @@ public class ResearchModeImuStream : MonoBehaviour
                 }
             }
 
-            // use Unity time for now
-            uint timeSec = (uint)Time.timeAsDouble;
-            uint timeNanoSec = (uint)((Time.timeAsDouble - timeSec)*1e9);
-
             // construct ROS messages
-            double[] cov = { 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01 };
-            HeaderMsg header = new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map");
+            var publishTime = (DateTime.Now - k_unixEpoch).TotalSeconds;
+            var sec = (uint)publishTime;
+            var nanosec = (uint)((publishTime - Math.Floor(publishTime)) * 1e9);
+
+            
+            HeaderMsg header = new HeaderMsg(0, new TimeMsg(sec, nanosec), "unity");
             QuaternionMsg nullQ = new QuaternionMsg(-1, 0, 0, 0);
+            double[] cov = { 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01 };
 
             ImuMsg imu = new ImuMsg(
                 header,                   // header
