@@ -40,6 +40,8 @@ public class ResearchModeABImageStream : MonoBehaviour
 
     // public Text text;
 
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
+
     private ROSConnection ros;
     // public string pointcloud2Topic;
     public string imgTopic;
@@ -102,12 +104,14 @@ public class ResearchModeABImageStream : MonoBehaviour
             }
         }
 
-        // contruct message
-        uint timeSec = (uint)Time.timeAsDouble;
-        uint timeNanoSec = (uint)((Time.timeAsDouble - timeSec)*1e9);
+        var publishTime = (DateTime.Now - k_unixEpoch).TotalSeconds;
+        var sec = (uint)publishTime;
+        var nanosec = (uint)((publishTime - Math.Floor(publishTime)) * 1e9);
+        HeaderMsg header = new HeaderMsg(0, new TimeMsg(sec, nanosec), "unity");
+
         // construct image message
         var img_msg = new ImageMsg(
-            header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map"),
+            header: header,
             height: 512,
             width: 512,
             encoding: "mono8",

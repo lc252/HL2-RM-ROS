@@ -32,8 +32,7 @@ public class ResearchModePointCloudStream : MonoBehaviour
     public string pointcloud2Topic;
     // public string imgTopic;
 
-
-
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0);
 
     void Start()
     {
@@ -86,16 +85,19 @@ public class ResearchModePointCloudStream : MonoBehaviour
             System.Buffer.BlockCopy(pointCloud, 0, data, 0, data.Length);
 
             // construct pointcloud message
-            uint timeSec = (uint)Time.timeAsDouble;
-            uint timeNanoSec = (uint)((Time.timeAsDouble - timeSec) * 1e9);
-            // contruct message fields once
             PointFieldMsg[] pointFields = new PointFieldMsg[3];
             pointFields[0] = new PointFieldMsg("x", 0, PointFieldMsg.FLOAT32, 1);
             pointFields[1] = new PointFieldMsg("y", 4, PointFieldMsg.FLOAT32, 1);
             pointFields[2] = new PointFieldMsg("z", 8, PointFieldMsg.FLOAT32, 1);
+
+            var publishTime = (DateTime.Now - k_unixEpoch).TotalSeconds;
+            var sec = (uint)publishTime;
+            var nanosec = (uint)((publishTime - Math.Floor(publishTime)) * 1e9);
+            HeaderMsg header = new HeaderMsg(0, new TimeMsg(sec, nanosec), "unity");
+
             // construct pointcloud message
             var pc2_msg = new PointCloud2Msg(
-                header: new HeaderMsg(0, new TimeMsg(timeSec, timeNanoSec), "map"),
+                header: header,
                 height: 1,
                 width: (uint)(pointCloud.Length / 3),
                 fields: pointFields,
