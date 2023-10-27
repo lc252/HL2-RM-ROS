@@ -18,7 +18,7 @@ public class PosePublisher : MonoBehaviour
 
     private double lastPublish = 0;
 
-    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 10, 0, 0, 0); // This is a hack to get local (Sydney) time and will break in daylight savings. There should be a better approach
+    private DateTime k_unixEpoch = new DateTime(1970, 1, 1, 11, 0, 0, 0); // This is a hack to get local (Sydney) time and will break in daylight savings. There should be a better approach
 
     public Text text = null;
 
